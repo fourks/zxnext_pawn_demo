@@ -1,0 +1,2 @@
+Crossroads
+You are at a junction in the passage. There are three exits, northwest, southwest and east. Some writing on the wall tells you that the northwest exit leads to a mine and the southwest exit leads to a residential area.
