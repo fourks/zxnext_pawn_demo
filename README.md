@@ -70,7 +70,7 @@ This archive contains a folder called zxnext_pawn_demo which contains the
 binaries and the required resource files. In the descriptions below, the
 absolute path to the zxnext_pawn_demo folder is denoted as <zxnext_pawn_demo>.
 
-The demo can be run either in the CSpect 1.1 and ZEsarUX 6.0 emulators or on the
+The demo can be run either in the CSpect 1.7 and ZEsarUX 6.0 emulators or on the
 Spectrum Next hardware (not yet tested).
 
 ### CSpect Emulator
