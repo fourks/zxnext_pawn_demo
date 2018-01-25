@@ -1,12 +1,13 @@
 # The Pawn Demo
 
 This is a demo of the text adventure game The Pawn for Sinclair ZX Spectrum Next.
-The Pawn was first released by Magnetic Scrolls in 1985 for Sinclair QL and the
+The Pawn was first released by Magnetic Scrolls for Sinclair QL in 1985. The
 Atari ST and Commodore Amiga versions released in 1986 were groundbreaking in
-providing premium graphics in combination with an advanced parser. In this demo,
-you can walk around in the world of Kerovnia and enjoy its beautiful graphics on
-your Spectrum Next. If you need help finding your way in Kerovnia, an almost
-accurate map can be downloaded from
+providing premium graphics in combination with an advanced parser. A text-only
+version of the game was released for Spectrum 128 and later Spectrum +3. In this
+demo, you can walk around in the world of Kerovnia and enjoy its beautiful
+graphics on your Spectrum Next. If you need help finding your way in Kerovnia,
+an almost accurate map can be downloaded from
 [Magnetic Scrolls Memorial](http://msmemorial.if-legends.org/games.htm/pawn.php).
 
 The purpose of the demo is to explore and demonstrate how a text adventure game
@@ -31,11 +32,11 @@ These images have been converted to Spectrum Next's layer 2 graphics mode. Some
 of the images have been slightly reduced in height to fit the Spectrum Next
 screen resolution.
 
-The demo is written in C using [z88dk](https://github.com/z88dk/z88dk). A big
-thank you to z88dk developer Alvin for helping out with the details of
-customizing the I/O terminal handling in z88dk. The graphics has been converted
-to Spectrum Next layer 2 format with the
-[Next BMP tools](https://github.com/stefanbylund/zxnext_bmp_tools) and is
+The demo is written in C (with some parts in assembler) using
+[z88dk](https://github.com/z88dk/z88dk). A big thank you to z88dk developer
+Alvin for helping out with the details of customizing the I/O terminal handling
+in z88dk. The graphics has been converted to Spectrum Next layer 2 format with
+the [Next BMP tools](https://github.com/stefanbylund/zxnext_bmp_tools) and is
 displayed in the demo using the
 [zxnext_layer2](https://github.com/stefanbylund/zxnext_layer2) graphics library.
 The intro music is played with the [vt_sound](https://github.com/stefanbylund/vt_sound)
@@ -62,6 +63,10 @@ The demo supports the following commands:
 ![On the Path](images/screenshots/on-the-path.png)
 ![River Bank](images/screenshots/bank.png)
 ![Palace Gardens](images/screenshots/palace-gardens.png)
+
+## Video
+
+[![The Pawn video](images/screenshots/title.png)](images/screenshots/pawn-video.mp4 "The Pawn video")
 
 ## How to Run
 
