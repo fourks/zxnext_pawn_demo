@@ -110,6 +110,10 @@ void init_hardware(void)
     z80_outp(REGISTER_NUMBER_PORT, TURBO_MODE_REGISTER);
     z80_outp(REGISTER_VALUE_PORT, 2);
 
+    // TODO: This is not set as default in some emulators.
+
+    layer2_set_main_screen_ram_bank(8);
+
     // Enable Timex modes.
 
     z80_outp(REGISTER_NUMBER_PORT, PERIPHERAL_3_REGISTER);
@@ -464,6 +468,12 @@ static void load_room_image(const char *filename)
     uint8_t transparency_color[2] = {0xE3, 0};
 
     intrinsic_halt();
+
+    /*
+     * Load the layer 2 image, if any, by temporarily using MMU slot 3 where
+     * half of the Timex hi-res screen resides. We can safely do this in the
+     * vertical blanking interval without disturbing the display.
+     */
 
     if (strlen(filename) > 0)
     {

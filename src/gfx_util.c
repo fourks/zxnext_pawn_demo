@@ -4,6 +4,7 @@
  * Graphics utility functions.
  ******************************************************************************/
 
+#include <arch/zxn.h>
 #include <arch/zxn/esxdos.h>
 #include <z80.h>
 #include <stddef.h>
@@ -15,7 +16,7 @@
 #include "zxnext_registers.h"
 #include "zxnext_layer2.h"
 
-#define SCREEN_ADDRESS ((uint8_t *) 0)
+#define SCREEN_ADDRESS ((uint8_t *) 0x6000)
 
 static void set_palette_color(uint8_t index, uint8_t color);
 
@@ -53,6 +54,7 @@ void set_timex_hires_colors(uint8_t fg_color, uint8_t bg_color)
 void gfx_load_screen(const char *filename, uint8_t num_lines)
 {
     uint8_t filehandle;
+    uint8_t screen_start_page;
 
     if ((filename == NULL) || (num_lines == 0))
     {
@@ -63,6 +65,9 @@ void gfx_load_screen(const char *filename, uint8_t num_lines)
     {
         num_lines = 192;
     }
+
+    // Disable layer 2 screen writing at bottom 16 KB prior to ESXDOS usage.
+    layer2_configure(true, false, false, 0);
 
     errno = 0;
     filehandle = esxdos_f_open(filename, ESXDOS_MODE_R | ESXDOS_MODE_OE);
@@ -85,46 +90,44 @@ void gfx_load_screen(const char *filename, uint8_t num_lines)
     }
     layer2_set_palette((uint16_t *) buf_256, 128, 128);
 
-    // Load screen.
-    if (num_lines <= 64)
-    {
-        layer2_configure(true, true, false, LAYER2_SCREEN_TOP);
-        esxdos_f_read(filehandle, SCREEN_ADDRESS, num_lines << 8);
-    }
-    else if (num_lines <= 128)
-    {
-        layer2_configure(true, true, false, LAYER2_SCREEN_TOP);
-        esxdos_f_read(filehandle, SCREEN_ADDRESS, 16384);
-        if (errno)
-        {
-            goto end;
-        }
+    // Load screen in max 8 KB chunks using MMU slot 3 at address 0x6000.
 
-        layer2_configure(true, true, false, LAYER2_SCREEN_MIDDLE);
-        esxdos_f_read(filehandle, SCREEN_ADDRESS, (num_lines - 64) << 8);
+    screen_start_page = layer2_get_main_screen_ram_bank() << 1;
+
+    if (num_lines <= 32)
+    {
+        ZXN_WRITE_MMU3(screen_start_page);
+        esxdos_f_read(filehandle, SCREEN_ADDRESS, num_lines << 8);
     }
     else
     {
-        layer2_configure(true, true, false, LAYER2_SCREEN_TOP);
-        esxdos_f_read(filehandle, SCREEN_ADDRESS, 16384);
-        if (errno)
+        uint8_t num_pages = num_lines / 32;
+        uint8_t rest_lines = num_lines % 32;
+        uint8_t page;
+
+        for (page = screen_start_page; page < screen_start_page + num_pages; page++)
         {
-            goto end;
+            ZXN_WRITE_MMU3(page);
+            esxdos_f_read(filehandle, SCREEN_ADDRESS, 8192);
+            if (errno)
+            {
+                goto end;
+            }
         }
 
-        layer2_configure(true, true, false, LAYER2_SCREEN_MIDDLE);
-        esxdos_f_read(filehandle, SCREEN_ADDRESS, 16384);
-        if (errno)
+        if (rest_lines > 0)
         {
-            goto end;
+            ZXN_WRITE_MMU3(page);
+            esxdos_f_read(filehandle, SCREEN_ADDRESS, rest_lines << 8);
         }
-
-        layer2_configure(true, true, false, LAYER2_SCREEN_BOTTOM);
-        esxdos_f_read(filehandle, SCREEN_ADDRESS, (num_lines - 128) << 8);
     }
 
 end:
-    layer2_configure(true, false, false, 0);
+    // Restore original page in MMU slot 3.
+    // TODO: The MMU slot registers are not readable in CSpect. Hence we cannot
+    // read the original MMU slot 3 value and restore it page. Instead, we must
+    // set it to its default page which is correct in this case.
+    ZXN_WRITE_MMU3(11);
     esxdos_f_close(filehandle);
 }
 
