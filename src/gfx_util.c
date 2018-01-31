@@ -6,14 +6,12 @@
 
 #include <arch/zxn.h>
 #include <arch/zxn/esxdos.h>
-#include <z80.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <errno.h>
 
 #include "gfx_util.h"
-#include "zxnext_registers.h"
 #include "zxnext_layer2.h"
 
 #define SCREEN_ADDRESS ((uint8_t *) 0x6000)
@@ -26,8 +24,7 @@ extern uint8_t buf_256[];
 void set_timex_hires_colors(uint8_t fg_color, uint8_t bg_color)
 {
     // Set the first ULA palette as the read/write palette.
-    z80_outp(REGISTER_NUMBER_PORT, PALETTE_CONTROL_REGISTER);
-    z80_outp(REGISTER_VALUE_PORT, 0);
+    ZXN_WRITE_REG(REG_PALETTE_CONTROL, 0);
 
     /*
      * NOTE: The foreground and background colors in the Timex high-resolution
@@ -133,9 +130,6 @@ end:
 
 static void set_palette_color(uint8_t index, uint8_t color)
 {
-    z80_outp(REGISTER_NUMBER_PORT, PALETTE_INDEX_REGISTER);
-    z80_outp(REGISTER_VALUE_PORT, index);
-
-    z80_outp(REGISTER_NUMBER_PORT, PALETTE_VALUE_8BIT_REGISTER);
-    z80_outp(REGISTER_VALUE_PORT, color);
+    ZXN_WRITE_REG(REG_PALETTE_INDEX, index);
+    ZXN_WRITE_REG(REG_PALETTE_VALUE_8, color);
 }

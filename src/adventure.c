@@ -20,7 +20,6 @@
 #include "world.h"
 #include "str_util.h"
 #include "gfx_util.h"
-#include "zxnext_registers.h"
 #include "zxnext_layer2.h"
 #include "vt_sound.h"
 
@@ -96,34 +95,17 @@ static const char *dir_names[] =
 
 void init_hardware(void)
 {
-    uint8_t peripheral_2_settings;
-    uint8_t peripheral_3_settings;
-
     // Put Z80 in 14 MHz turbo mode.
-
-    z80_outp(REGISTER_NUMBER_PORT, PERIPHERAL_2_REGISTER);
-    peripheral_2_settings = z80_inp(REGISTER_VALUE_PORT);
-
-    z80_outp(REGISTER_NUMBER_PORT, PERIPHERAL_2_REGISTER);
-    z80_outp(REGISTER_VALUE_PORT, 0x80 | peripheral_2_settings);
-
-    z80_outp(REGISTER_NUMBER_PORT, TURBO_MODE_REGISTER);
-    z80_outp(REGISTER_VALUE_PORT, 2);
-
-    // TODO: This is not set as default in some emulators.
-
-    layer2_set_main_screen_ram_bank(8);
+    ZXN_WRITE_REG(REG_PERIPHERAL_2, ZXN_READ_REG(REG_PERIPHERAL_2) | RP2_ENABLE_TURBO);
+    ZXN_WRITE_REG(__REG_TURBO_MODE, RTM_14MHZ);
 
     // Enable Timex modes.
+    ZXN_WRITE_REG(REG_PERIPHERAL_3, ZXN_READ_REG(REG_PERIPHERAL_3) | RP3_ENABLE_TIMEX);
 
-    z80_outp(REGISTER_NUMBER_PORT, PERIPHERAL_3_REGISTER);
-    peripheral_3_settings = z80_inp(REGISTER_VALUE_PORT);
-
-    z80_outp(REGISTER_NUMBER_PORT, PERIPHERAL_3_REGISTER);
-    z80_outp(REGISTER_VALUE_PORT, 0x04 | peripheral_3_settings);
+    // TODO: This is not set as default in some emulators.
+    layer2_set_main_screen_ram_bank(8);
 
     // Initialize IM2 interrupt service routine.
-
     init_isr();
 }
 
@@ -397,8 +379,7 @@ static void reset_hardware(void)
 
     // Disable Timex high-resolution graphics mode.
     ts_vmod(TVM_SPECTRUM);
-    z80_outp(REGISTER_NUMBER_PORT, PERIPHERAL_3_REGISTER);
-    z80_outp(REGISTER_VALUE_PORT, 0x10);
+    ZXN_WRITE_REG(REG_PERIPHERAL_3, RP3_ENABLE_SPEAKER); // Default settings
 
     zx_border(INK_WHITE);
     zx_cls(INK_BLACK | PAPER_WHITE);
