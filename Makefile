@@ -80,17 +80,17 @@ distro:
 	$(MAKE) clean all
 	$(MAKE) all BUILD_SNA=true
 	$(RM) tmp
-	$(MKDIR) tmp/zxnext_pawn_demo
-	$(CP) bin/sdcc_iy/pawndemo.tap tmp/zxnext_pawn_demo
-	$(CP) bin/sdcc_iy/pawndemo.sna tmp/zxnext_pawn_demo
-	$(CP) vt_sound.bin tmp/zxnext_pawn_demo
-	$(CP) text/ tmp/zxnext_pawn_demo
-	$(CP) gfx/ tmp/zxnext_pawn_demo
-	$(CP) sound/ tmp/zxnext_pawn_demo
-	$(CP) README.md tmp/zxnext_pawn_demo
-	$(CP) run_cspect.bat tmp/zxnext_pawn_demo
+	$(MKDIR) tmp/pawndemo
+	$(CP) bin/sdcc_iy/pawndemo.tap tmp/pawndemo
+	$(CP) bin/sdcc_iy/pawndemo.sna tmp/pawndemo
+	$(CP) vt_sound.bin tmp/pawndemo
+	$(CP) text/ tmp/pawndemo
+	$(CP) gfx/ tmp/pawndemo
+	$(CP) sound/ tmp/pawndemo
+	$(CP) README.md tmp/pawndemo
+	$(CP) run_cspect.bat tmp/pawndemo
 	$(RM) build/zxnext_pawn_demo.zip
-	cd tmp; $(ZIP) ../build/zxnext_pawn_demo.zip zxnext_pawn_demo
+	cd tmp; $(ZIP) ../build/zxnext_pawn_demo.zip pawndemo
 	$(RM) tmp
 
 clean:

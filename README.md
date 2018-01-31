@@ -71,9 +71,9 @@ The demo supports the following commands:
 ## How to Run
 
 The latest version of this program can be downloaded **[here](build/zxnext_pawn_demo.zip)**.
-This archive contains a folder called zxnext_pawn_demo which contains the
-binaries and the required resource files. In the descriptions below, the
-absolute path to the zxnext_pawn_demo folder is denoted as <zxnext_pawn_demo>.
+This archive contains a folder called pawndemo which contains the binaries and
+the required resource files. In the descriptions below, the absolute path to the
+pawndemo folder is denoted as <pawndemo>.
 
 The demo can be run either in the CSpect 1.7 and ZEsarUX 6.0 emulators or on the
 Spectrum Next hardware (not yet tested).
@@ -85,7 +85,7 @@ Spectrum Next hardware (not yet tested).
 2. Run the pawndemo.sna file in the CSpect emulator:
 
 ```
-> CSpect.exe -w2 -zxnext -mmc=<zxnext_pawn_demo>/ <zxnext_pawn_demo>/pawndemo.sna
+> CSpect.exe -w2 -zxnext -mmc=<pawndemo>/ <pawndemo>/pawndemo.sna
 ```
 
 Note that the -mmc path must end with a / or \ character!
@@ -99,7 +99,7 @@ CSpect.exe is located.
 1. Install the latest version of the [ZEsarUX](https://sourceforge.net/projects/zesarux/)
 emulator.
 
-2. Copy the contents of the <zxnext_pawn_demo> folder to
+2. Copy the contents of the pawndemo folder to
 <zesarux>/extras/media/spectrum/esxdos_handler/0.8.6_TBBLUE.
 
 3. Run the pawndemo.tap file in the ZEsarUX emulator:
@@ -107,7 +107,7 @@ emulator.
 ```
 > zesarux.exe --machine tbblue --enable-mmc --enable-divmmc-ports --mmc-file tbblue.mmc
   --enable-esxdos-handler --esxdos-root-dir extras/media/spectrum/esxdos_handler/0.8.6_TBBLUE
-  --quickexit --tape <zxnext_pawn_demo>/pawndemo.tap
+  --quickexit --tape <pawndemo>/pawndemo.tap
 ```
 
 ### Spectrum Next
@@ -119,7 +119,7 @@ directory of an SD card containing the Spectrum Next firmware.
 
 2. Insert the SD card in your Spectrum Next computer and start it.
 
-3. Go to the directory zxnext_pawn_demo and run the program pawndemo.sna.
+3. Go to the directory pawndemo and run the program pawndemo.sna.
 
 ## Known Problems
 
