@@ -450,12 +450,6 @@ static void load_room_image(const char *filename)
 
     intrinsic_halt();
 
-    /*
-     * Load the layer 2 image, if any, by temporarily using MMU slot 3 where
-     * half of the Timex hi-res screen resides. We can safely do this in the
-     * vertical blanking interval without disturbing the display.
-     */
-
     if (strlen(filename) > 0)
     {
         char filepath[MAX_FILEPATH_LENGTH];

@@ -14,7 +14,7 @@
 #include "gfx_util.h"
 #include "zxnext_layer2.h"
 
-#define SCREEN_ADDRESS ((uint8_t *) 0x6000)
+#define SCREEN_ADDRESS ((uint8_t *) 0xE000)
 
 static void set_palette_color(uint8_t index, uint8_t color);
 
@@ -87,13 +87,13 @@ void gfx_load_screen(const char *filename, uint8_t num_lines)
     }
     layer2_set_palette((uint16_t *) buf_256, 128, 128);
 
-    // Load screen in max 8 KB chunks using MMU slot 3 at address 0x6000.
+    // Load screen in max 8 KB chunks using MMU slot 7 at address 0xE000.
 
     screen_start_page = layer2_get_main_screen_ram_bank() << 1;
 
     if (num_lines <= 32)
     {
-        ZXN_WRITE_MMU3(screen_start_page);
+        ZXN_WRITE_MMU7(screen_start_page);
         esxdos_f_read(filehandle, SCREEN_ADDRESS, num_lines << 8);
     }
     else
@@ -104,7 +104,7 @@ void gfx_load_screen(const char *filename, uint8_t num_lines)
 
         for (page = screen_start_page; page < screen_start_page + num_pages; page++)
         {
-            ZXN_WRITE_MMU3(page);
+            ZXN_WRITE_MMU7(page);
             esxdos_f_read(filehandle, SCREEN_ADDRESS, 8192);
             if (errno)
             {
@@ -114,17 +114,17 @@ void gfx_load_screen(const char *filename, uint8_t num_lines)
 
         if (rest_lines > 0)
         {
-            ZXN_WRITE_MMU3(page);
+            ZXN_WRITE_MMU7(page);
             esxdos_f_read(filehandle, SCREEN_ADDRESS, rest_lines << 8);
         }
     }
 
 end:
-    // Restore original page in MMU slot 3.
+    // Restore original page in MMU slot 7.
     // TODO: The MMU slot registers are not readable in CSpect. Hence we cannot
-    // read the original MMU slot 3 value and restore it page. Instead, we must
+    // read the original MMU slot 7 value and restore it page. Instead, we must
     // set it to its default page which is correct in this case.
-    ZXN_WRITE_MMU3(11);
+    ZXN_WRITE_MMU7(1);
     esxdos_f_close(filehandle);
 }
 

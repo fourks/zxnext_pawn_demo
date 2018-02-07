@@ -26,6 +26,10 @@ void set_timex_hires_colors(uint8_t fg_color, uint8_t bg_color);
  * order from left-to-right and top-to-bottom. The pixel bytes are indexes into
  * the 256 color palette.
  *
+ * MMU slot 7 is temporarily used when loading the layer 2 screen file.
+ * The layer 2 write-only paging area at the bottom 16 KB cannot be used when
+ * using ESXDOS.
+ *
  * If there is any error when loading the file, errno is set with the
  * corresponding ESXDOS error code.
  */
