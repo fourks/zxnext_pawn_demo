@@ -122,7 +122,7 @@ void show_screen(const char *screen_file, uint8_t border_color)
     layer2_configure(true, false, false, 0);
     layer2_clear_screen(0x00, NULL);
     layer2_set_rw_palette(true);
-    layer2_load_screen(screen_file, NULL, true);
+    layer2_load_screen(screen_file, NULL, 7, true);
 }
 
 void play_music(const char *music_file)
