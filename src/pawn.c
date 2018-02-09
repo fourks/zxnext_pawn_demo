@@ -25,7 +25,7 @@ int main(void)
     wait_key();
     stop_music();
 
-    create_game_screen(INK_BLACK, 0x00, 0x07, "gfx/generic.nxi");
+    create_game_screen(INK_BLACK, 0x00, IO_TVM_HIRES_WHITE, "gfx/generic.nxi");
     create_game_world();
 
     while (true)

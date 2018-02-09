@@ -10,12 +10,6 @@
 #include <stdint.h>
 
 /*
- * Set the foreground and background RGB332 colors to be used in the Timex high-
- * resolution graphics mode.
- */
-void set_timex_hires_colors(uint8_t fg_color, uint8_t bg_color);
-
-/*
  * Load the given number of lines from the specified layer 2 screen file using
  * ESXDOS into the layer 2 screen memory.
  *

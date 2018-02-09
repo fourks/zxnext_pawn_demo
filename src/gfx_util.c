@@ -16,37 +16,8 @@
 
 #define SCREEN_ADDRESS ((uint8_t *) 0xE000)
 
-static void set_palette_color(uint8_t index, uint8_t color);
-
 // From zxnext_layer2.lib.
 extern uint8_t buf_256[];
-
-void set_timex_hires_colors(uint8_t fg_color, uint8_t bg_color)
-{
-    // Set the first ULA palette as the read/write palette.
-    ZXN_WRITE_REG(REG_PALETTE_CONTROL, 0);
-
-    /*
-     * NOTE: The foreground and background colors in the Timex high-resolution
-     * graphics mode are selected differently in ZEsarUX and CSpect!
-     *
-     * ZEsarUX: Foreground color is at ULA palette index 0 and background color
-     * is at ULA palette index 128.
-     *
-     * CSpect: Foreground color is at ULA palette index 7 and background color
-     * is at ULA palette index 16.
-     *
-     * FIXME: How is the foreground and background color set on a real Spectrum Next?
-     */
-
-    // ZEsarUX foreground and background color.
-    set_palette_color(0, fg_color);
-    set_palette_color(128, bg_color);
-
-    // CSpect foreground and background color.
-    set_palette_color(7, fg_color);
-    set_palette_color(16, bg_color);
-}
 
 void gfx_load_screen(const char *filename, uint8_t num_lines)
 {
@@ -126,10 +97,4 @@ end:
     // set it to its default page which is correct in this case.
     ZXN_WRITE_MMU7(1);
     esxdos_f_close(filehandle);
-}
-
-static void set_palette_color(uint8_t index, uint8_t color)
-{
-    ZXN_WRITE_REG(REG_PALETTE_INDEX, index);
-    ZXN_WRITE_REG(REG_PALETTE_VALUE_8, color);
 }

@@ -184,17 +184,16 @@ void create_game_screen(uint8_t border_color,
                         const char *generic_image_file)
 {
     // Set border color and clear the ULA screen.
-    /*
-     * TODO: In the Timex high-resolution graphics mode, ZEsarUX picks the
-     * border color from ULA palette index 0 to 7 (inks) while according to the
-     * specification it should pick it from ULA palette index 128 to 135 (papers).
-     */
     zx_border(border_color);
     zx_cls(INK_BLACK | PAPER_BLACK);
 
-    // Set foreground and background colors for Timex high-resolution graphics mode.
-    // TODO: Setting this via ts_vmod(), i.e. port 0xFF, doesn't work in the emulators.
-    set_timex_hires_colors(0xFF, 0x00);
+    // TODO: CSpect doesn't use bright colors in Timex high-resolution graphics
+    // mode (as it should). To compensate for this, we set the ULA palette color
+    // corresponding to the Timex hi-res ink color to its bright version (in
+    // this case pure white).
+    ZXN_WRITE_REG(REG_PALETTE_CONTROL, 0);
+    ZXN_WRITE_REG(REG_PALETTE_INDEX, 7);
+    ZXN_WRITE_REG(REG_PALETTE_VALUE_8, 0xFF);
 
     // Enable layer 2 screen (by default on top of ULA screen) and clear it.
     // Set the first layer 2 palette as the read/write palette and reset its
@@ -219,8 +218,9 @@ void create_game_screen(uint8_t border_color,
 
     // Enable Timex high-resolution graphics mode for the ULA screen with the
     // given ink/paper color combination and clear the screen.
-    // Note: Memory areas 0x4000 - 0x57FF and 0x6000 - 0x77FF are used.
-    ts_vmod(TVM_HIRES | ((timex_hires_colors & 0x07) << 3));
+    z80_outp(0xFF, timex_hires_colors);
+    // FIXME: Use ts_vmod() instead of z80_outp() when it works.
+    //ts_vmod(timex_hires_colors);
     memset((void *) 0x4000, 0, 0x1800);
     memset((void *) 0x6000, 0, 0x1800);
     // FIXME: Use tshr_cls_pix() instead of memset() when supported by SCCZ80.
