@@ -135,8 +135,13 @@ void play_music(const char *music_file)
         return;
     }
 
-    // Load the vt_sound binary at address 0x4000 (ULA screen).
-    // This is done in order to avoid using memory between 0x8000 and 0xFFFF.
+    // Page in pages 29-30 in MMU slots 2-3 at address 0x4000 (ULA screen) for
+    // loading the vt_sound binary and music module. This is done in order to
+    // avoid using memory between 0x8000 and 0xFFFF.
+    ZXN_WRITE_MMU2(29);
+    ZXN_WRITE_MMU3(30);
+
+    // Load the vt_sound binary at address 0x4000.
     vt_sound_size = load_file(VT_SOUND_BIN, (uint8_t *) 0x4000);
 
     // Load the music file right after the vt_sound binary.
@@ -167,8 +172,10 @@ void stop_music(void)
     z80_bpoke(0x8183, 0x4D);
     intrinsic_ei();
 
-    // Clear the ULA screen to remove the vt_sound binary and music module.
-    zx_cls(INK_BLACK | PAPER_BLACK);
+    // Remove the vt_sound binary and music module by restoring pages 10-11
+    // (ULA screen) in MMU slots 2-3.
+    ZXN_WRITE_MMU2(10);
+    ZXN_WRITE_MMU3(11);
 }
 
 void create_game_screen(uint8_t border_color,
@@ -176,13 +183,14 @@ void create_game_screen(uint8_t border_color,
                         uint8_t timex_hires_colors,
                         const char *generic_image_file)
 {
-    // Set border color.
+    // Set border color and clear the ULA screen.
     /*
      * TODO: In the Timex high-resolution graphics mode, ZEsarUX picks the
      * border color from ULA palette index 0 to 7 (inks) while according to the
      * specification it should pick it from ULA palette index 128 to 135 (papers).
      */
     zx_border(border_color);
+    zx_cls(INK_BLACK | PAPER_BLACK);
 
     // Set foreground and background colors for Timex high-resolution graphics mode.
     // TODO: Setting this via ts_vmod(), i.e. port 0xFF, doesn't work in the emulators.
