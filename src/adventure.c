@@ -218,12 +218,8 @@ void create_game_screen(uint8_t border_color,
     // Enable Timex high-resolution graphics mode for the ULA screen with the
     // given ink/paper color combination and clear the screen.
     z80_outp(0xFF, timex_hires_colors);
-    // FIXME: Use ts_vmod() instead of z80_outp() when it works.
-    //ts_vmod(timex_hires_colors);
     memset((void *) 0x4000, 0, 0x1800);
     memset((void *) 0x6000, 0, 0x1800);
-    // FIXME: Use tshr_cls_pix() instead of memset() when supported by SCCZ80.
-    //tshr_cls_pix(0);
 
     // Store the generic image filename, if any. If NULL, the image area for
     // rooms without an image is filled with the layer2_background_color instead.
