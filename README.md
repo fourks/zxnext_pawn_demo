@@ -75,8 +75,17 @@ This archive contains a folder called pawndemo which contains the binaries and
 the required resource files. In the descriptions below, the absolute path to the
 pawndemo folder is denoted as <pawndemo>.
 
-The demo can be run either in the CSpect 1.7 and ZEsarUX 6.0 emulators or on the
-Spectrum Next hardware (not yet tested).
+The demo can be run on the Spectrum Next hardware or in the CSpect 1.7 and
+ZEsarUX 6.1 emulators.
+
+### Spectrum Next
+
+1. On your PC, unpack the downloaded ZIP file zxnext_pawn_demo.zip in the root
+directory of an SD card containing the Spectrum Next firmware.
+
+2. Insert the SD card in your Spectrum Next computer and start it.
+
+3. Go to the directory pawndemo and run the program pawndemo.sna.
 
 ### CSpect Emulator
 
@@ -105,26 +114,24 @@ emulator.
 3. Run the pawndemo.tap file in the ZEsarUX emulator:
 
 ```
-> zesarux.exe --machine tbblue --enable-mmc --enable-divmmc-ports --mmc-file tbblue.mmc
-  --enable-esxdos-handler --esxdos-root-dir extras/media/spectrum/esxdos_handler/0.8.6_TBBLUE
-  --quickexit --tape <pawndemo>/pawndemo.tap
+> zesarux.exe --machine tbblue --enabletimexvideo --enable-mmc --enable-divmmc-ports --mmc-file tbblue.mmc
+  --enable-esxdos-handler --esxdos-root-dir extras/media/spectrum/esxdos_handler/0.8.6_TBBLUE --quickexit
+  --tape <pawndemo>/pawndemo.tap
 ```
 
-### Spectrum Next
+**Note:** The demo does not work properly in the ZEsarUX emulator since the Timex
+hi-res graphics mode cannot be combined with the layer 2 screen in ZEsarUX 6.1.
+Initially, only the text will be displayed in the demo. To see the images, press
+F5 in ZEsarUX and select "Settings -> Display -> Timex Real 512x192 -> No".
+However, the text will now be downscaled to a 256 * 192 resolution and is thus
+difficult to read.
 
-Since the Spectrum Next is not yet available, the following is only guesswork:
-
-1. On your PC, unpack the downloaded ZIP file zxnext_pawn_demo.zip in the root
-directory of an SD card containing the Spectrum Next firmware.
-
-2. Insert the SD card in your Spectrum Next computer and start it.
-
-3. Go to the directory pawndemo and run the program pawndemo.sna.
-
-## Known Problems
-
-The demo does not work properly in the ZEsarUX emulator since the Timex hi-res
-graphics mode cannot be combined with the layer 2 screen in ZEsarUX 6.0.
+**Tip:** For convenience, you can also run the included batch file
+**run_zesarux.bat**. Make sure zesarux.exe is in your PATH or modify the batch
+file to point out where zesarux.exe is located. You still need to manually copy
+the contents of the pawndemo folder to
+<zesarux>/extras/media/spectrum/esxdos_handler/0.8.6_TBBLUE before running the
+batch file.
 
 ## License
 
