@@ -65,9 +65,15 @@ extern FILE *window_out;
 // Input/output terminal window (fd 1).
 extern FILE *window_in;
 
-static char text_buffer[MAX_TEXT_LENGTH];
+/*
+ * Note: We use the free 2 KB RAM between the end of the Timex hi-res screen
+ * (0x7800) and the start of the program (0x8000) for storing the text_buffer
+ * (MAX_TEXT_LENGTH bytes) and line_buffer (MAX_LINE_LENGTH bytes) buffers.
+ */
 
-static char line_buffer[MAX_LINE_LENGTH];
+static char *text_buffer = (char *) 0x7800;
+
+static char *line_buffer = (char *) (0x7800 + MAX_TEXT_LENGTH);
 
 static room_t *current_room;
 
@@ -247,8 +253,8 @@ command_t read_input(void)
     fflush(stdin);
 
     // Wait for and read input until Enter is pressed.
-    memset(line_buffer, 0, sizeof(line_buffer));
-    result = fgets(line_buffer, sizeof(line_buffer), stdin);
+    memset(line_buffer, 0, MAX_LINE_LENGTH);
+    result = fgets(line_buffer, MAX_LINE_LENGTH, stdin);
 
     if ((result == NULL) || (strlen(result) <= 1))
     {
@@ -423,7 +429,7 @@ static void show_current_room(bool load_image)
 
     // Load and display room description.
 
-    memset(text_buffer, 0, sizeof(text_buffer));
+    memset(text_buffer, 0, MAX_TEXT_LENGTH);
     load_room_text(current_room->description_file, text_buffer);
 
     str_remove_cr(text_buffer);
