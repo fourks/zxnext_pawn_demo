@@ -141,11 +141,11 @@ void play_music(const char *music_file)
         return;
     }
 
-    // Page in pages 29-30 in MMU slots 2-3 at address 0x4000 (ULA screen) for
+    // Page in pages 28-29 in MMU slots 2-3 at address 0x4000 (ULA screen) for
     // loading the vt_sound binary and music module. This is done in order to
     // avoid using memory between 0x8000 and 0xFFFF.
-    ZXN_WRITE_MMU2(29);
-    ZXN_WRITE_MMU3(30);
+    ZXN_WRITE_MMU2(28);
+    ZXN_WRITE_MMU3(29);
 
     // Load the vt_sound binary at address 0x4000.
     vt_sound_size = load_file(VT_SOUND_BIN, (uint8_t *) 0x4000);
