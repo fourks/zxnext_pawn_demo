@@ -66,7 +66,7 @@ The demo supports the following commands:
 
 ## Video
 
-[![The Pawn video](images/screenshots/title.png)](http://stefanbylund.ownit.nu/files/pawn-video.mp4 "Click to play")
+[![The Pawn video](images/screenshots/video-title.png)](http://stefanbylund.ownit.nu/files/pawn-video.mp4 "Click to play")
 
 ## How to Run
 
