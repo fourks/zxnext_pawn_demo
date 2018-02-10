@@ -1,0 +1,71 @@
+The Pawn Demo - Memory Layout
+-----------------------------
+
+This document describes the memory layout of The Pawn demo program.
+
+The Sinclair ZX Spectrum Next has 64 KB addressable memory. This memory is
+divided in 8 MMU slots of 8 KB each and numbered from 0 to 7. An unexpanded ZX
+Spectrum Next has 1 MB physical RAM of which 768 KB is available for programs.
+This 768 KB RAM is divided in 96 MMU pages of 8 KB each and numbered from 0 to
+95. MMU pages 0 to 15 correspond to the 128 KB RAM of the ZX Spectrum 128. MMU
+pages 16 to 27 are by default used for the layer 2 main and shadow screens in ZX
+Spectrum Next. The 96 MMU pages can be paged in to any of the 8 MMU slots in the
+64 KB address space.
+
+
+Memory Map
+----------
+
+This is the memory map for The Pawn demo program:
+
+ |------------------------------------------------| 0xFFFF
+ |                                                |
+ | Memory banking (MMU slot 7) [8 KB]             |
+ |                                                |
+ |------------------------------------------------| 0xE000
+ | Stack (grows downward) [max 256 bytes]         |
+ |------------------------------------------------| 0xDF00
+ |                                                |
+ |                                                |
+ |                                                |
+ |                                                |
+ | Main program (code, data, bss) [max ~23.3 KB]  |
+ |                                                |
+ |                                                |
+ |                                                |
+ |                                                |
+ |------------------------------------------------| 0x8184
+ | IM2 interrupt vector table and ISR [388 bytes] |
+ |------------------------------------------------| 0x8000
+ | Free RAM used by main program [2 KB]           |
+ |------------------------------------------------| 0x7800
+ | Timex hi-res screen (odd columns) [6 KB]       |
+ |------------------------------------------------| 0x6000
+ | System memory [2 KB]                           |
+ |------------------------------------------------| 0x5800
+ | Timex hi-res screen (even columns) [6 KB]      |
+ |------------------------------------------------| 0x4000
+ |                                                |
+ |                                                |
+ | Spectrum 48 ROM / ESXDOS / DivMMC [16 KB]      |
+ |                                                |
+ |                                                |
+ |------------------------------------------------| 0x0000
+
+
+MMU Pages
+---------
+
+Below are the MMU pages used by The Pawn demo program:
+
+* Layer 2 screen:
+  MMU pages 16 to 21 (48 KB) contains the layer 2 screen and are incrementally
+  loaded via MMU slot 7.
+
+* Vortex Tracker II player and intro music PT3 module:
+  MMU pages 28 and 29 (16 KB) are initially loaded in MMU slots 2 and 3 and then
+  paged out and discarded when the intro music is over.
+
+* Future program extensions:
+  MMU pages 28 to 95 (544 KB) can be used for future program extensions loaded
+  in MMU slot 7.
