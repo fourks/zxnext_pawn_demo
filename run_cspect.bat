@@ -1,11 +1,12 @@
 @echo off
 
-REM Add the path to CSpect.exe in your PATH environment variable (e.g. C:\cspect) or
-REM set CSPECT_HOME in this batch file by uncommenting and modifying the example below.
+REM This batch file needs to know in which directory CSpect.exe is located,
+REM e.g. C:\cspect\. Add this directory to your PATH environment variable
+REM or set the CSPECT_HOME environment variable to point to it.
 
-for /f %%a in ('where CSpect.exe') do set CSPECT_HOME=%%~dpa
-
-REM set CSPECT_HOME=C:\cspect
+if not defined CSPECT_HOME (
+  for /f %%a in ('where CSpect.exe') do set CSPECT_HOME=%%~dpa
+)
 
 set DEMODIR=%~dp0
 

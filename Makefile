@@ -89,6 +89,7 @@ distro:
 	$(CP) sound/ tmp/pawndemo
 	$(CP) README.md tmp/pawndemo
 	$(CP) run_cspect.bat tmp/pawndemo
+	$(CP) run_zesarux.bat tmp/pawndemo
 	$(RM) build/zxnext_pawn_demo.zip
 	cd tmp; $(ZIP) ../build/zxnext_pawn_demo.zip pawndemo
 	$(RM) tmp

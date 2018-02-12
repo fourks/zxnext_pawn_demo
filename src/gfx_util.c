@@ -6,6 +6,7 @@
 
 #include <arch/zxn.h>
 #include <arch/zxn/esxdos.h>
+#include <z80.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
@@ -60,11 +61,14 @@ void gfx_load_screen(const char *filename, uint8_t num_lines)
 
     // Load screen in max 8 KB chunks using MMU slot 7 at address 0xE000.
 
+    // FIXME: Use ZXN_WRITE_MMU7(page) instead of ZXN_WRITE_REG(REG_MMU7, page)
+    // when it's fixed in SDCC.
+
     screen_start_page = layer2_get_main_screen_ram_bank() << 1;
 
     if (num_lines <= 32)
     {
-        ZXN_WRITE_MMU7(screen_start_page);
+        ZXN_WRITE_REG(REG_MMU7, screen_start_page);
         esxdos_f_read(filehandle, SCREEN_ADDRESS, num_lines << 8);
     }
     else
@@ -75,7 +79,7 @@ void gfx_load_screen(const char *filename, uint8_t num_lines)
 
         for (page = screen_start_page; page < screen_start_page + num_pages; page++)
         {
-            ZXN_WRITE_MMU7(page);
+            ZXN_WRITE_REG(REG_MMU7, page);
             esxdos_f_read(filehandle, SCREEN_ADDRESS, 8192);
             if (errno)
             {
@@ -85,7 +89,9 @@ void gfx_load_screen(const char *filename, uint8_t num_lines)
 
         if (rest_lines > 0)
         {
-            ZXN_WRITE_MMU7(page);
+            // FIXME: Here neither ZXN_WRITE_MMU7(page) nor ZXN_WRITE_REG(REG_MMU7, page) works in SDCC.
+            z80_outp(0x243B, REG_MMU7);
+            z80_outp(0x253B, page);
             esxdos_f_read(filehandle, SCREEN_ADDRESS, rest_lines << 8);
         }
     }
@@ -95,6 +101,6 @@ end:
     // TODO: The MMU slot registers are not readable in CSpect. Hence we cannot
     // read the original MMU slot 7 value and restore it page. Instead, we must
     // set it to its default page which is correct in this case.
-    ZXN_WRITE_MMU7(1);
+    ZXN_WRITE_REG(REG_MMU7, 1);
     esxdos_f_close(filehandle);
 }
