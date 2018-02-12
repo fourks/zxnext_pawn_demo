@@ -388,7 +388,7 @@ static void reset_hardware(void)
     layer2_configure(false, false, false, 0);
 
     // Disable Timex high-resolution graphics mode.
-    ts_vmod(TVM_SPECTRUM);
+    z80_outp(0xFF, 0);
     ZXN_WRITE_REG(REG_PERIPHERAL_3, RP3_ENABLE_SPEAKER); // Default settings
 
     zx_border(INK_WHITE);
