@@ -1,9 +1,5 @@
 * Fix the FIXMEs/TODOs.
 
-* Use a bigger font?
-
-* Timex hi-res text distorted and wrong fg/bg colors in ZEsarUX.
-
 * Add a real parser (at least "verb noun" sentences allowing but ignoring intermediate words).
 
 * Add support for objects (take/drop, interaction, location, amount, weight).

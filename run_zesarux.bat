@@ -11,6 +11,16 @@ if not defined ZESARUX_HOME (
   for /f %%a in ('where zesarux.exe') do set ZESARUX_HOME=%%~dpa
 )
 
+if not defined ZESARUX_HOME (
+  echo zesarux.exe cannot be found.
+  exit /b
+)
+
+if not exist %ZESARUX_HOME%\extras\media\spectrum\esxdos_handler\0.8.6_TBBLUE\vt_sound.bin (
+  echo Copy the contents of the pawndemo folder to extras\media\spectrum\esxdos_handler\0.8.6_TBBLUE in your ZEsarUX installation!
+  exit /b
+)
+
 set DEMODIR=%~dp0
 
 @echo on

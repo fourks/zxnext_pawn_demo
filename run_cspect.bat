@@ -8,6 +8,11 @@ if not defined CSPECT_HOME (
   for /f %%a in ('where CSpect.exe') do set CSPECT_HOME=%%~dpa
 )
 
+if not defined CSPECT_HOME (
+  echo CSpect.exe cannot be found.
+  exit /b
+)
+
 set DEMODIR=%~dp0
 
 @echo on
