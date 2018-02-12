@@ -70,18 +70,19 @@ The demo supports the following commands:
 
 ## How to Run
 
-The latest version of this program can be downloaded **[here](build/zxnext_pawn_demo.zip)**.
+The latest version of this program can be downloaded **[HERE](build/zxnext_pawn_demo.zip)**.
 This archive contains a folder called pawndemo which contains the binaries and
 the required resource files. In the descriptions below, the absolute path to the
 pawndemo folder is denoted as <pawndemo>.
 
-The demo can be run on the Spectrum Next hardware or in the CSpect 1.7 and
+The demo can be run on the Spectrum Next hardware or in the CSpect 1.9 and
 ZEsarUX 6.1 emulators.
 
 ### Spectrum Next
 
 1. On your PC, unpack the downloaded ZIP file zxnext_pawn_demo.zip in the root
-directory of an SD card containing the Spectrum Next firmware.
+directory of an SD card containing the Spectrum Next firmware. The *.md and *.bat
+files are not needed and can be skipped.
 
 2. Insert the SD card in your Spectrum Next computer and start it.
 
@@ -100,8 +101,8 @@ directory of an SD card containing the Spectrum Next firmware.
 Note that the -mmc path must end with a / or \ character!
 
 **Tip:** For convenience, you can also run the included batch file **run_cspect.bat**.
-Make sure CSpect.exe is in your PATH or modify the batch file to point out where
-CSpect.exe is located.
+Make sure CSpect.exe is in your PATH or set the CSPECT_HOME environment variable to
+the directory where it is located.
 
 ### ZEsarUX Emulator
 
@@ -127,17 +128,20 @@ However, the text will now be downscaled to a 256 * 192 resolution and is thus
 difficult to read.
 
 **Tip:** For convenience, you can also run the included batch file
-**run_zesarux.bat**. Make sure zesarux.exe is in your PATH or modify the batch
-file to point out where zesarux.exe is located. You still need to manually copy
-the contents of the pawndemo folder to
-<zesarux>/extras/media/spectrum/esxdos_handler/0.8.6_TBBLUE before running the
-batch file.
+**run_zesarux.bat**. Make sure zesarux.exe is in your PATH or set the
+ZESARUX_HOME environment variable to the directory where it is located.
+You still need to manually copy the contents of the pawndemo folder to
+<zesarux>/extras/media/spectrum/esxdos_handler/0.8.6_TBBLUE before running
+the batch file.
 
 ## License
 
 This software is licensed under the terms of the MIT license.
 
 Text and graphics are copyright (C) 1985-1987 by Magnetic Scrolls Ltd.
+
+The FZX proportional font driver is copyright (C) 2013 by Andrew Owen and Einar
+Saukas.
 
 Music track "heroquesters" is copyright (C) 2004 by Nik-O (Oleg Nikitin).
 
