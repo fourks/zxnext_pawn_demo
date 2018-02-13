@@ -77,7 +77,7 @@ The demo supports the following commands:
 The latest version of this program can be downloaded **[HERE](build/zxnext_pawn_demo.zip)**.
 This archive contains a folder called pawndemo which contains the binaries and
 the required resource files. In the descriptions below, the absolute path to the
-pawndemo folder is denoted as <pawndemo>.
+pawndemo folder is denoted as &lt;pawndemo&gt;.
 
 The demo can be run on the Spectrum Next hardware or in the CSpect 1.9 and
 ZEsarUX 6.1 emulators.
@@ -114,7 +114,7 @@ the directory where it is located.
 emulator.
 
 2. Copy the contents of the pawndemo folder to
-<zesarux>/extras/media/spectrum/esxdos_handler/0.8.6_TBBLUE.
+&lt;zesarux&gt;/extras/media/spectrum/esxdos_handler/0.8.6_TBBLUE.
 
 3. Run the pawndemo.tap file in the ZEsarUX emulator:
 
@@ -135,7 +135,7 @@ difficult to read.
 **run_zesarux.bat**. Make sure zesarux.exe is in your PATH or set the
 ZESARUX_HOME environment variable to the directory where it is located.
 You still need to manually copy the contents of the pawndemo folder to
-<zesarux>/extras/media/spectrum/esxdos_handler/0.8.6_TBBLUE before running
+&lt;zesarux&gt;/extras/media/spectrum/esxdos_handler/0.8.6_TBBLUE before running
 the batch file.
 
 ## License
