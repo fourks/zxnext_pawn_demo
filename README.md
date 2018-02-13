@@ -21,9 +21,13 @@ The purpose of the demo is *not* to provide a fully-featured playable game.
 The parser is very limited, you can only walk around in the world, you cannot
 interact with its in-game characters and objects. I don't intend to continue
 developing the demo into a complete game since the original game is still under
-copyright and even if it wasn't, reimplementing the full parser and analyzing
-the original source code for determining all possible character/object
-interactions would be a huge work.
+copyright. Disregarding any legal issues, reimplementing the full parser and
+determining all possible character/object interactions would be a huge work.
+A potentially more feasible option would be to port
+[Magnetic](http://msmemorial.if-legends.org/magnetic.php), Niclas Karlsson's
+Magnetic Scrolls interpreter written in C, to z88dk. The Magnetic source code
+would need to be restructured to support memory banking since it will not fit
+in a 64 KB address space.
 
 The demo contains all rooms with descriptions and graphics from the original
 Amiga version of the game. The Amiga version of The Pawn used the same graphics

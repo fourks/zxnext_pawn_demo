@@ -1,5 +1,7 @@
 * Fix the FIXMEs/TODOs.
 
+* Package the program using the forthcoming Spectrum Next container format in z88dk.
+
 * Add a real parser (at least "verb noun" sentences allowing but ignoring intermediate words).
 
 * Add support for objects (take/drop, interaction, location, amount, weight).
