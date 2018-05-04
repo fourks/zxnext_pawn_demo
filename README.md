@@ -150,4 +150,4 @@ Saukas.
 Music track "heroquesters" is copyright (C) 2004 by Nik-O (Oleg Nikitin).
 
 The Vortex Tracker II player in the file PT3PROM.asm is copyright (C) 2004-2007
-by Sergey Bulba (http://bulba.untergrund.net/).
+by Sergey Bulba.
