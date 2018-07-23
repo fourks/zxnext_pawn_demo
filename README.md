@@ -17,13 +17,10 @@ high-resolution text with a proportional font. It also demonstrates how a text
 adventure game can support a large amount of graphics and text by loading such
 resources on-demand from an SD card using ESXDOS.
 
-The purpose of the demo is *not* to provide a fully-featured playable game.
+The purpose of the demo is not to provide a fully-featured playable game.
 The parser is very limited, you can only walk around in the world, you cannot
-interact with its in-game characters and objects. I don't intend to continue
-developing the demo into a complete game since the original game is still under
-copyright. Disregarding any legal issues, reimplementing the full parser and
-determining all possible character/object interactions would be a huge work.
-A potentially more feasible option would be to port
+interact with its in-game characters and objects. To turn the demo into a
+complete game, a feasible option would be to port
 [Magnetic](http://msmemorial.if-legends.org/magnetic.php), Niclas Karlsson's
 Magnetic Scrolls interpreter written in C, to z88dk. The Magnetic source code
 would need to be restructured to support memory banking since it will not fit
